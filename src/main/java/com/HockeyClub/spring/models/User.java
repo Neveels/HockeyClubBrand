@@ -1,19 +1,16 @@
 package com.HockeyClub.spring.models;
 
-import com.fasterxml.jackson.databind.DatabindException;
-import jdk.jfr.DataAmount;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users", 
@@ -39,6 +36,8 @@ public class User implements UserDetails {
   private String phoneNumber;
 
   private Boolean active;
+
+  private String activateCode;
 
 //  @ManyToMany(fetch = FetchType.LAZY)
 //  @JoinTable(  name = "user_roles",

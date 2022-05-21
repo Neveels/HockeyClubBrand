@@ -3,7 +3,6 @@ package com.HockeyClub.spring.repository.controllers;
 import com.HockeyClub.spring.models.User;
 import com.HockeyClub.spring.security.services.AdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
