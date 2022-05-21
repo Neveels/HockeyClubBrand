@@ -1,4 +1,4 @@
-package com.HockeyClub.spring.security.services;
+package com.HockeyClub.spring.services;
 
 import java.util.Collection;
 import java.util.List;

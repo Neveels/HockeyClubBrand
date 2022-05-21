@@ -1,4 +1,4 @@
-package com.HockeyClub.spring.security.services;
+package com.HockeyClub.spring.services;
 
 import com.HockeyClub.spring.models.ERole;
 import com.HockeyClub.spring.models.User;
@@ -37,7 +37,7 @@ public class UserService {
         if(!StringUtils.isEmpty(user.getEmail())){
             String message = String.format(
                     "Hello %s! \n" +
-                            "Welcome to Dinamo Minsk. Please, visit next link: http://localhost/3000/activate/%s",
+                            "Welcome to Dinamo Minsk. Please, visit next link: http://localhost/8086/activate/%s",
                     user.getUsername(),
                     user.getActivateCode()
             );

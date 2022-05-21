@@ -1,4 +1,4 @@
-package com.HockeyClub.spring.repository.controllers;
+package com.HockeyClub.spring.controllers;
 
 import com.HockeyClub.spring.payload.request.LoginRequest;
 import com.HockeyClub.spring.payload.request.SignupRequest;
@@ -6,8 +6,8 @@ import com.HockeyClub.spring.repository.UserRepository;
 import com.HockeyClub.spring.repository.response.JwtResponse;
 import com.HockeyClub.spring.repository.response.MessageResponse;
 import com.HockeyClub.spring.security.jwt.JwtUtils;
-import com.HockeyClub.spring.security.services.UserDetailsImpl;
-import com.HockeyClub.spring.security.services.UserService;
+import com.HockeyClub.spring.services.UserDetailsImpl;
+import com.HockeyClub.spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

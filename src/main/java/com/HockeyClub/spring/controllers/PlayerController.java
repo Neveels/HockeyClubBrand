@@ -1,8 +1,8 @@
-package com.HockeyClub.spring.repository.controllers;
+package com.HockeyClub.spring.controllers;
 
 import com.HockeyClub.spring.models.Player;
 import com.HockeyClub.spring.payload.request.PlayerRequest;
-import com.HockeyClub.spring.security.services.PlayerService;
+import com.HockeyClub.spring.services.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.HockeyClub.spring.repository.controllers;
+package com.HockeyClub.spring.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -2,7 +2,7 @@ package com.HockeyClub.spring.security;
 
 import com.HockeyClub.spring.security.jwt.AuthEntryPointJwt;
 import com.HockeyClub.spring.security.jwt.AuthTokenFilter;
-import com.HockeyClub.spring.security.services.UserDetailsServiceImpl;
+import com.HockeyClub.spring.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.HockeyClub.spring.security.services;
+package com.HockeyClub.spring.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

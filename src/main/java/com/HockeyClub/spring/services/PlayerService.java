@@ -1,4 +1,4 @@
-package com.HockeyClub.spring.security.services;
+package com.HockeyClub.spring.services;
 
 import com.HockeyClub.spring.models.Player;
 import com.HockeyClub.spring.payload.request.PlayerRequest;

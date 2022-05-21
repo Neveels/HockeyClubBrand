@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.HockeyClub.spring.security.services.UserDetailsImpl;
+import com.HockeyClub.spring.services.UserDetailsImpl;
 import io.jsonwebtoken.*;
 
 @Component

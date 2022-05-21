@@ -1,4 +1,4 @@
-package com.HockeyClub.spring.security.services;
+package com.HockeyClub.spring.services;
 
 import com.HockeyClub.spring.models.User;
 import com.HockeyClub.spring.repository.UserRepository;
