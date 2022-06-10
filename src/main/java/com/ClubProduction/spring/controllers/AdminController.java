@@ -16,13 +16,12 @@ public class AdminController {
 
     @GetMapping("/users")
     public List<User> admin() {
-        return adminService.list();
+        return adminService.findAllUsers();
     }
 
     @PostMapping("user/ban/{id}")
-    public String userBan(@PathVariable("id") Long id) {
-        adminService.banUser(id);
-        return "User active changed";
+    public boolean userBan(@PathVariable("id") Long id) {
+        return adminService.banUser(id);
     }
 
 }

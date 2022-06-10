@@ -15,28 +15,21 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public List<Product> listProducts(String title){
-        List<Product> products = productRepository.findAll();
-        if(title != null) return productRepository.findByTitle(title);
-        else productRepository.findAll();
+    public List<Product> findNewProducts() {
+        List<Product> products = productRepository.findNewProducts();
         return products;
     }
 
-    public List<Product> first3Products(){
-        List<Product> products = productRepository.findNew3Product();
-        return  products;
-    }
-
-    public void saveProduct(Product product){
+    public void saveProduct(Product product) {
         log.info("Saving new{}", product);
         productRepository.save(product);
     }
 
-    public List<Product> getAllProducts(){
+    public List<Product> findAllProducts() {
         return productRepository.findAll();
     }
 
-    public void deleteProduct(Long id){
+    public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
 

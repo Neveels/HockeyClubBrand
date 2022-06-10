@@ -1,7 +1,7 @@
 package com.ClubProduction.spring.controllers;
 
 import com.ClubProduction.spring.models.Player;
-import com.ClubProduction.spring.payload.request.PlayerRequest;
+import com.ClubProduction.spring.payload.request.ChangePlayerStatisticRequest;
 import com.ClubProduction.spring.services.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,32 +9,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/player")
+@RequestMapping("/players")
 @CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
 public class PlayerController {
 
     private final PlayerService playerService;
 
-    @GetMapping("/allPlayers")
-    public List<Player> listPlayers(){
-        return playerService.listOfPlayers();
-    }
-
     @PostMapping("/add")
-    public String addPlayer(@RequestBody Player player){
+    public Player addPlayer(@RequestBody Player player) {
         playerService.create(player);
-        return "Players successfully added";
+        return player;
     }
 
-    @PutMapping("/changeStatistic/{id}")
-    public String changeGoalAndAssistField(@RequestBody PlayerRequest playerRequest, @PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public void deletePlayer(@PathVariable Long id) {
+        playerService.deleteById(id);
+    }
+
+    @GetMapping("")
+    public List<Player> getAllPlayers() {
+        return playerService.findAllPlayers();
+    }
+
+    @GetMapping("/{id}")
+    public Player getPlayerById(@PathVariable Long id) {
+        return playerService.findPlayerById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ChangePlayerStatisticRequest changeGoalAndAssistField(@RequestBody ChangePlayerStatisticRequest playerRequest, @PathVariable Long id) {
         playerService.changeGoalAndAssistField(playerRequest, id);
-        return "Players fields successfully changed";
+        return playerRequest;
     }
 
-    @GetMapping("/get/{id}")
-    public Player getPlayerById(@PathVariable Long id){
-        return playerService.getPlayerById(id);
-    }
+
 }

@@ -27,13 +27,13 @@ public class UserService {
     @Autowired
     PasswordEncoder encoder;
 
-    public boolean checkActive(LoginRequest loginRequest){
+    public boolean checkActive(LoginRequest loginRequest) {
         Optional<User> user = userRepository.findByUsername(loginRequest.getUsername());
-        if(!user.get().getActive()) return false;
+        if (!user.get().getActive()) return false;
         else return true;
     }
 
-    public void addUser(SignupRequest signUpRequest){
+    public void addUser(SignupRequest signUpRequest) {
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()), signUpRequest.getPhoneNumber());
@@ -42,21 +42,21 @@ public class UserService {
         user.getRoles().add(Role.ROLE_USER);
         //Generate activation code
         user.setActivateCode(UUID.randomUUID().toString());
-        if(!StringUtils.isEmpty(user.getEmail())){
+        if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello %s! \n" +
                             "Welcome to Dinamo-Minsk. Please, visit next link: http://localhost:8086/activate/%s",
                     user.getUsername(),
                     user.getActivateCode()
             );
-            mailSender.send(user.getEmail(),"Activation code", message);
+            mailSender.send(user.getEmail(), "Activation code", message);
         }
         userRepository.save(user);
     }
 
     public boolean activateUser(String code) {
         User user = userRepository.findByActivateCode(code);
-        if(user == null){
+        if (user == null) {
             return false;
         }
         //null because user confirmed email
@@ -67,26 +67,21 @@ public class UserService {
 
     public boolean checkActivatedCode(LoginRequest loginRequest) {
         Optional<User> user = userRepository.findByUsername(loginRequest.getUsername());
-        if(user.get().getActivateCode() != null){
+        if (user.get().getActivateCode() != null) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
-    public void changeRole(Long id) {
+    public User changeRole(Long id) {
         User user = userRepository.findById(id).orElse(null);
-        if(user.isAdmin()){
+        if (user.isAdmin()) {
             user.getRoles().clear();
             user.getRoles().add(Role.ROLE_USER);
-        }else{
+        } else {
             user.getRoles().clear();
             user.getRoles().add(Role.ROLE_ADMIN);
         }
 
-        userRepository.save(user);
-//        if(user.get().isAdmin()){
-//            user.get().setRoles(Collections.singleton(ERole.ROLE_USER));
-//        }else user.get().setRoles(Collections.singleton(ERole.ROLE_ADMIN));
-//        userRepository.save();
+        return userRepository.save(user);
     }
 }

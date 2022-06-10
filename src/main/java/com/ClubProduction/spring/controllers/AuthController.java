@@ -24,68 +24,68 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-  @Autowired
-  AuthenticationManager authenticationManager;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-  @Autowired
-  UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
-  @Autowired
-  UserService userService;
+    @Autowired
+    UserService userService;
 
-  @Autowired
-  JwtUtils jwtUtils;
+    @Autowired
+    JwtUtils jwtUtils;
 
-  @PostMapping("/signin")
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-    Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
 
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    String jwt = jwtUtils.generateJwtToken(authentication);
-
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-    List<String> roles = userDetails.getAuthorities().stream()
-            .map(item -> item.getAuthority())
-            .collect(Collectors.toList());
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
 
 
-    if(!userService.checkActive(loginRequest)){
-      return ResponseEntity
-              .badRequest()
-              .body(new MessageResponse("You got ban"));
-    }
-    if(userService.checkActivatedCode(loginRequest)){      return ResponseEntity
-            .badRequest()
-            .body(new MessageResponse("Activate your email"));
-    }
+        if (!userService.checkActive(loginRequest))
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("You got ban"));
 
-    return ResponseEntity.ok(new JwtResponse(jwt,
+        if (userService.checkActivatedCode(loginRequest))
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Activate your email"));
 
-                         userDetails.getId(), 
-                         userDetails.getUsername(), 
-                         userDetails.getEmail(),
-                         userDetails.getPhoneNumber(),
-                         roles));
-  }
 
-  @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Username is already taken!"));
+        return ResponseEntity.ok(new JwtResponse(jwt,
+
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                userDetails.getPhoneNumber(),
+                roles));
     }
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Email is already in use!"));
-    }
-    // Create new user's account
-    userService.addUser(signUpRequest);
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is already taken!"));
+        }
 
-    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-  }
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email is already in use!"));
+        }
+        // Create new user's account
+        userService.addUser(signUpRequest);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
 }

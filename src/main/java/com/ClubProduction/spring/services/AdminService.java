@@ -1,9 +1,11 @@
 package com.ClubProduction.spring.services;
 
+import com.ClubProduction.spring.models.Role;
 import com.ClubProduction.spring.models.User;
 import com.ClubProduction.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +16,17 @@ import java.util.List;
 public class AdminService {
     private final UserRepository userRepository;
 
-    public List<User> list(){
+    public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 
-    public void banUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if(user != null){
-//                user.getActive() ? user.setActive(false) : user.setActive(true);
+    public boolean banUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+        if (user.getRoles().equals(Role.ROLE_ADMIN)) {
+            return false;
+        }
+
+        if (user != null) {
             if (user.getActive()) {
                 user.setActive(false);
             } else {
@@ -29,5 +34,6 @@ public class AdminService {
             }
         }
         userRepository.save(user);
+        return true;
     }
 }

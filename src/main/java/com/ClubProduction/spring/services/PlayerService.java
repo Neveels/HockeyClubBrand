@@ -1,7 +1,7 @@
 package com.ClubProduction.spring.services;
 
 import com.ClubProduction.spring.models.Player;
-import com.ClubProduction.spring.payload.request.PlayerRequest;
+import com.ClubProduction.spring.payload.request.ChangePlayerStatisticRequest;
 import com.ClubProduction.spring.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.List;
 public class PlayerService {
     private final PlayerRepository playerRepository;
 
-    public List<Player> listOfPlayers(){
+    public List<Player> findAllPlayers() {
         return playerRepository.findAll();
     }
 
@@ -23,20 +23,23 @@ public class PlayerService {
         playerRepository.save(player);
     }
 
-    public void changeGoalAndAssistField(PlayerRequest playerRequest, Long id) {
+    public void changeGoalAndAssistField(ChangePlayerStatisticRequest playerRequest, Long id) {
         Player player = playerRepository.getById(id);
         Integer assists = player.getAssist();
         Integer goals = player.getGoal();
-        if(player != null){
+        if (player != null) {
             player.setAssist(assists + playerRequest.getAssist());
             player.setGoal(goals + playerRequest.getGoals());
             playerRepository.save(player);
-        }
-        else log.info("Игрок не найден");
+        } else log.info("Игрок не найден");
 
     }
 
-    public Player getPlayerById(Long id) {
+    public Player findPlayerById(Long id) {
         return playerRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(Long id) {
+        playerRepository.deleteById(id);
     }
 }

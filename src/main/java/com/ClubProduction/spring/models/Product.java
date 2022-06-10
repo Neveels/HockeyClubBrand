@@ -23,7 +23,7 @@ public class Product {
     private String url;
 
     @PrePersist
-    private void init(){
+    private void init() {
         dateOfAdded = LocalDateTime.now();
     }
 

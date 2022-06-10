@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @SpringBootApplication
 public class ClubProduction {
 
-	public static void main(String[] args) {
-    SpringApplication.run(ClubProduction.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ClubProduction.class, args);
+    }
 
 }

@@ -14,24 +14,23 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping("newProducts")
-    public List<Product> products(){
-        return productService.first3Products();
+    @GetMapping("/newProducts")
+    public List<Product> getNewProducts() {
+        return productService.findNewProducts();
     }
 
-    @GetMapping("allProduct")
-    public List<Product> allProducts(){
-        return productService.getAllProducts();
+    @GetMapping("")
+    public List<Product> getProducts() {
+        return productService.findAllProducts();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteProductById(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public void deleteProductById(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return "product successfully deleted";
     }
 
     @PostMapping("create")
-    public Product createProduct(@RequestBody Product product){
+    public Product createProduct(@RequestBody Product product) {
         productService.saveProduct(product);
         return product;
     }

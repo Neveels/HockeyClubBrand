@@ -14,8 +14,8 @@ public class MailSender {
 
     @Autowired
     private JavaMailSender mailSender;
-//subject is a body of sms
-    public void send(String emailTo, String subject, String message){
+    //subject is a body of sms
+    public void send(String emailTo, String subject, String message) {
         //create obj Alt + Ctrl + V
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
